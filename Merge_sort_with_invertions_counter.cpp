@@ -1,3 +1,4 @@
+//Merge sort with invertions counter
 template<typename FirstIt, typename SecondIt, typename OutIt>
 OutIt Merge(FirstIt first_begin, FirstIt first_end, SecondIt second_begin, SecondIt second_end, OutIt out_begin, int64_t& counter) {
     while (first_begin != first_end && second_begin != second_end) {
