@@ -1,0 +1,81 @@
+//input
+//2 3
+//0 5
+//7 10
+//1 6 11
+
+//output
+//1 0 0
+#include <iostream>
+#include<vector>
+#include<utility>
+#include<algorithm>
+#include<ios>
+
+template<class Iterator>
+Iterator partition(Iterator start, Iterator end)
+{
+
+    Iterator middle = start + static_cast<int>(std::distance(start, end) / 2);
+    std::iter_swap(start, middle);
+
+    Iterator pivot = start;
+    Iterator left = std::next(start);
+
+    while (start != end)
+    {
+        if (*start < *pivot)
+        {
+            std::iter_swap(left, start);
+            ++left;
+        }
+
+        ++start;
+    }
+
+    std::advance(left, -1);
+    std::iter_swap(left, pivot);
+    return left;
+
+}
+
+template<class Iterator>
+void recursive_quicksort(Iterator start, Iterator end)
+{
+
+    if (std::distance(start, end) > 1)
+    {
+        Iterator pivot = partition(start, end);
+        recursive_quicksort(start, pivot);
+        recursive_quicksort(pivot, end);
+    }
+}
+int XBound(std::vector<int64_t>& arr, int point) {
+    auto it = std::upper_bound(arr.begin(), arr.end(), point);
+    return std::distance(arr.begin(), it);
+}
+int YBound(std::vector<int64_t>& arr, int point) {
+    auto it = std::lower_bound(arr.begin(), arr.end(), point);
+    return std::distance(arr.begin(), it);
+}
+
+int main() {
+    size_t n, m;
+    std::cin >> n >> m;
+    std::vector<int64_t>arr_start(n);
+    std::vector<int64_t>arr_finish;
+    int64_t j;
+    for (int64_t& i : arr_start) {
+        std::cin >> i >> j;
+        arr_finish.push_back(j);
+    }
+    std::sort(arr_start.begin(), arr_start.end());
+    std::sort(arr_finish.begin(), arr_finish.end());
+    int point;
+    while (m != 0) {
+        std::cin >> point;
+        --m;
+        std::cout << XBound(arr_start, point) - YBound(arr_finish, point) << " ";
+    }
+    return 0;
+}
