@@ -1,0 +1,27 @@
+#include <iostream>
+#include <vector>
+
+int binary_search(const std::vector<int>& numbers, int number) {
+    size_t l = 0;
+    size_t r = numbers.size();
+    while (l + 1 < r) {
+        size_t m = (l + r) / 2;
+        if (numbers[m] > number) {
+            r = m;
+        }
+        else {
+            l = m;
+        }
+    }
+    if (l == r || numbers[l] != number) {
+        return -1;
+    }
+    return l + 1;
+}
+
+int main()
+{
+    std::vector<int> num = { 45,543,6645 ,23467 ,246778 ,2342387};
+    int place = binary_search(num, 246778);
+    std::cout << place;
+}
